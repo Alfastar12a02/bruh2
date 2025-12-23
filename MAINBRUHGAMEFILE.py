@@ -43,6 +43,7 @@ max_arrival_frequency = 1800
 next_arrival_time = random.randint(min_arrival_frequency, max_arrival_frequency)+gametime
 #the average speed of a plane in knots
 avg_spd = 400.0
+#das ist change
 #base count of pixels per second that a plane will pass(i think)
 pixel_speed_base = 0.5
 #chance for a plane to fly by and not land
