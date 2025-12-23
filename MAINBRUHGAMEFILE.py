@@ -22,23 +22,38 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('BRAHGAME')
 screen.fill(GRAY)
 pygame.display.flip()
+#FPS settings
 FPS = 20
 CLOCK = pygame.time.Clock()
 CLOCK.tick(FPS)
+#runs the whole game cycle
 run = True
+#X level of the radar center
 RADAR_CX = 262.5
+#Y level of the radar center
 RADAR_CY = 437.5
+#radius of the radar in pixels
 RADAR_RADIUS = 212.5
+#planes on radar right now
 planes_on_radar_rn = []
+#minimum and maximum numbers of plane arrival frequency
 min_arrival_frequency = 300
 max_arrival_frequency = 1800
+#time before next plane will arrive
 next_arrival_time = random.randint(min_arrival_frequency, max_arrival_frequency)+gametime
+#the average speed of a plane in knots
 avg_spd = 400.0
+#base count of pixels per second that a plane will pass(i think)
 pixel_speed_base = 0.5
+#chance for a plane to fly by and not land
 land_or_no_chance = 0.2
+#what exactly is getting displayed
 visibility_on_screen = 'Visibility: 20km'
+#holds the number of visibility in kilometers to go on display
 visibility_display = 20
+#time before next weather change will occur
 next_weather_changetime = gametime
+#well, possible commands in-game
 possible_cmds = ['Hello', 'Divert', "You may land", 'You may take off', 'Abort', 'Traffic, go lower', 'Traffic, go higher', 'Go to flight level FLXXX']
 #draws the main lines of the screen and decides its color
 def DRAW_DA_SCREEN():
