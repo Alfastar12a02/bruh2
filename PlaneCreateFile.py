@@ -4,6 +4,7 @@ import random
 class Plane:
     def __init__(self, plane_type, flight_stats, fuel, course, speed, altitude, location):
         self.plane_type = plane_type
+
         self.flight_stats = flight_stats
         self.fuel = fuel
         self.course = course

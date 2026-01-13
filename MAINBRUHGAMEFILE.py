@@ -2,6 +2,7 @@ import pygame
 import random
 import PlaneCreateFile
 import math
+
 import time
 #default statements(time, starting weather etc.)
 gametime = 28800
