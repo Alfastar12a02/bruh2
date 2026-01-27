@@ -1,10 +1,12 @@
 import random
+import time
 
 
 class Plane:
     def __init__(self, plane_type, flight_stats, fuel, course, speed, altitude, location):
         self.plane_type = plane_type
-
+        self.able_to_request_landing = True
+        self.able_to_request_takeoff = False
         self.flight_stats = flight_stats
         self.fuel = fuel
         self.course = course
@@ -12,6 +14,8 @@ class Plane:
         self.altitude = altitude
         self.location = location
         self.angle = 0
+        self.on_ground = False
+        self.emergency = False
     plane_type_random_list = ['ATR-42', 'ATR-72', 'B737', 'B747', 'A320']
     flight_stats_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                  'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -39,8 +43,25 @@ class Plane:
         alt_picker = random.randint(stats['altitude'][0], stats['altitude'][1])
 
         return Plane(plane_type = plane_type_chooser,flight_stats = flight_number_picker,fuel = fuel_picker,course = None,speed = speed_picker,altitude = alt_picker,location = None)
-AAA = Plane.OBJECT_CREATOR(Plane)
-print(f"bruhAAA{AAA.plane_type}, bruhAAA{AAA.flight_stats}, bruhAAA{AAA.fuel}, bruhAAA{AAA.course}, bruhAAA{AAA.speed}, bruhAAA{AAA.altitude}, bruhAAA{AAA.location}")
-
-
-
+    def plane_abilities(Plane):
+        if Plane.on_ground == False:
+            Plane.able_to_request_landing = True
+            #need to add: message from plane goes to button you needa check
+            time.sleep(3)
+            Plane.on_ground = True
+            Plane.able_to_request_landing = False
+            if Plane.fuel < 90:
+                Plane.able_to_request_refuel = True
+                #need to add message for button here too
+                time.sleep(10)
+                Plane.able_to_request_refuel = False
+                Plane.able_to_request_takeoff = True
+            elif Plane.fuel > 90:
+                Plane.able_to_request_refuel = False
+                Plane.able_to_request_landing = False
+        elif Plane.on_ground == True:
+            Plane.able_to_request_takeoff = True
+            #same as above comment
+            time.sleep(3)
+            Plane.on_ground = False
+            Plane.able_to_request_takeoff = False

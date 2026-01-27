@@ -2,8 +2,9 @@ import pygame
 import random
 import PlaneCreateFile
 import math
-
 import time
+
+
 #default statements(time, starting weather etc.)
 gametime = 28800
 current_weather = 'clear'
@@ -57,8 +58,11 @@ visibility_display = 20
 next_weather_changetime = gametime
 #well, possible commands in-game
 possible_cmds = ['Hello', 'Divert', "You may land", 'You may take off', 'Abort', 'Traffic, go lower', 'Traffic, go higher', 'Go to flight level FLXXX']
-#draws the main lines of the screen and decides its color
 def DRAW_DA_SCREEN():
+    '''
+    draws the main lines of the screen and decides its color
+    '''
+    #1350 445
     screen.fill(GRAY)
     pygame.draw.line(screen, BLACK, (0, 175), (550, 175))
     pygame.draw.line(screen, BLACK, (550, 0), (550, 700))
@@ -67,8 +71,12 @@ def DRAW_DA_SCREEN():
     pygame.draw.line(screen, BLACK, (175, 0), (175, 175))
     pygame.draw.line(screen, BLACK, (1025, 445), (1025, 640))
     pygame.draw.line(screen, BLACK, (550, 40), (1500, 40))
+    pygame.draw.line(screen, BLACK, (1350, 445), (1350, 40))
 #draws the radar circles
 def draw_a_radar_challenge():
+    '''
+    draws the radar using green and black circles and green lines
+    '''
     pygame.draw.circle(screen, GREEN, (262.5, 437.5), 214.5)
     pygame.draw.circle(screen, BLACK, (262.5, 437.5), 212.5)
     pygame.draw.line(screen, GREEN, (48, 223), (475, 652), width=2)
@@ -94,6 +102,7 @@ weatherfont = pygame.font.SysFont('Calibri', 30)
 flight_font = pygame.font.SysFont('Consolas', 16, bold=True)
 #draws the numbers on the ends of the radar lines
 def numbers_of_the_radar():
+    '''draws the radar's azimuth numbers'''
     az_360 = font.render('360', True, GREEN)
     screen.blit(az_360, (262.5, 195))
     az_180 = font.render('180', True, GREEN)
@@ -111,8 +120,10 @@ def numbers_of_the_radar():
     az_135 = font.render('135', True, GREEN)
     screen.blit(az_135, (478, 655))
 
-#displays the time, located above the radar
 def UPPERPART_BRUHBRUH():
+    '''
+    displays the time, located above the radar
+    '''
     gametime_hrs = gametime//60//60
     gametime_min = gametime//60 % 60
     fullmin_secreset = gametime//60
@@ -125,8 +136,10 @@ def UPPERPART_BRUHBRUH():
     gametime_sec_scr = timefont.render(f'SEC:{gametime_sec}', True, CYAN)
     screen.blit(gametime_sec_scr, (30, 115))
 
-#contains the weather and visibility code
 def WEATHERPART_BRUHBRUHBRUH():
+    '''
+    contains the weather and visibility code
+    '''
     global visibility_display, next_weather_changetime, current_weather, crosswind, thunder, rain, weather_is_clear, wind_course_randomizer, wind_speed_randomizer
     wind_course_randomizer = random.randint(0, 23) * 15
     wind_speed_randomizer = random.randint(0, 50)
@@ -151,14 +164,19 @@ def WEATHERPART_BRUHBRUHBRUH():
         visibility_display = random.randint(20, 50)
         visibility_on_screen = f'Visibility: {visibility_display}km'
 
-#contains code for what is under the text pad
+
 def UNDER_TEXTPAD_BRUHBRUHBRUHRBRUH():
+    '''
+    contains code for what is under the text pad
+    '''
     weather_on_the_screen = weatherfont.render(f'current weather:{current_weather}', True, GREEN)
     screen.blit(weather_on_the_screen, (1060, 470))
     visibility_on_screen = weatherfont.render(f'Visibility: {visibility_display}km', True, GREEN)
     screen.blit(visibility_on_screen, (1060, 510))
-#contains plane spawning code and new arrival time
 def SPAWN():
+    '''
+    contains plane spawning code and new arrival time
+    '''
     global next_arrival_time
     if gametime >= next_arrival_time:
         newplane = PlaneCreateFile.Plane.OBJECT_CREATOR(PlaneCreateFile.Plane)
@@ -182,8 +200,11 @@ def SPAWN():
             newplane.course = int(newplane.angle)
         planes_on_radar_rn.append(newplane)
         next_arrival_time = random.randint(min_arrival_frequency, max_arrival_frequency)+gametime
-#displays the plane on the screen and gives it starting instructions
+
 def DRAW_DA_PLANE_ON_DA_SCREEN():
+    '''
+    displays the plane on the screen and gives it starting instructions
+    '''
     for plane in planes_on_radar_rn[:]:
         if plane.behavior == 'circle':
             plane.angle -= plane.angular_speed
@@ -216,8 +237,11 @@ def DRAW_DA_PLANE_ON_DA_SCREEN():
         pygame.draw.line(screen, WHITE, (int(plane.x) + 4, int(plane.y)), label_rect.midleft, width=1)
 
         screen.blit(label, label_rect)
-#main game cycle
+
 while run:
+    '''
+    main game cycle
+    '''
     CLOCK.tick(FPS)
 
     if gametime <= 72000:
