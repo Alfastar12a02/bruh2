@@ -56,20 +56,17 @@ visibility_on_screen = 'Visibility: 20km'
 visibility_display = 20
 #time before next weather change will occur
 next_weather_changetime = gametime
-#well, possible commands in-game
-possible_cmds = ['Hello', 'Divert', "You may land", 'You may take off', 'Abort', 'Traffic, go lower', 'Traffic, go higher', 'Go to flight level FLXXX']
+chat_activity = True
 def DRAW_DA_SCREEN():
     '''
     draws the main lines of the screen and decides its color
     '''
-    #1350 445
     screen.fill(GRAY)
     pygame.draw.line(screen, BLACK, (0, 175), (550, 175))
     pygame.draw.line(screen, BLACK, (550, 0), (550, 700))
     pygame.draw.line(screen, BLACK, (550, 445), (1500, 445))
-    pygame.draw.line(screen, BLACK, (550, 640), (1500, 640))
     pygame.draw.line(screen, BLACK, (175, 0), (175, 175))
-    pygame.draw.line(screen, BLACK, (1025, 445), (1025, 640))
+    pygame.draw.line(screen, BLACK, (1025, 445), (1025, 700))
     pygame.draw.line(screen, BLACK, (550, 40), (1500, 40))
     pygame.draw.line(screen, BLACK, (1350, 445), (1350, 40))
 #draws the radar circles
@@ -100,6 +97,8 @@ font = pygame.font.SysFont('Calibri', 20)
 timefont = pygame.font.SysFont('Bahschrift SemiBold Condensed', 50)
 weatherfont = pygame.font.SysFont('Calibri', 30)
 flight_font = pygame.font.SysFont('Consolas', 16, bold=True)
+small_font = pygame.font.SysFont('Calibri', 30)
+text_tips_VERY_small = pygame.font.SysFont('Calibri', 20)
 #draws the numbers on the ends of the radar lines
 def numbers_of_the_radar():
     '''draws the radar's azimuth numbers'''
@@ -238,6 +237,27 @@ def DRAW_DA_PLANE_ON_DA_SCREEN():
 
         screen.blit(label, label_rect)
 
+def InTerFACE():
+    possible_cmds = ['Hello', 'Divert', 'Cleared for landing', 'Cleared for takeoff', 'Abort', 'Traffic, go lower',
+                     'Traffic, go higher', 'Go to flight level FLXXX']
+    for i in possible_cmds:
+        current_cmd = small_font.render(i, True, GREEN)
+        screen.blit(current_cmd, (565, 780))
+    if chat_activity == False:
+        label = small_font.render('Press T to activate chat', True, GREEN)
+        screen.blit(label, (810, 220))
+    else:
+        pygame.draw.rect(screen, GRAY, (550, 344, 800, 101))
+        pygame.draw.rect(screen, GREEN, (550, 344, 800, 101), 2)
+
+
+def GO_WRITE_DA_COMMANDS_OR_NO_GAME():
+    POSSIBLE_CMDS_FOR_SCREEN = ['1-Hello', '2-Divert', '3-Cleared for landing', '4-Cleared for takeoff', '5-Abort', '6-Traffic, go lower', '7-Traffic, go higher', '8-Go to flight level FL[input flight level]']
+    for i, x in enumerate(POSSIBLE_CMDS_FOR_SCREEN):
+        render_cmd = text_tips_VERY_small.render(x, True, GREEN)
+        screen.blit(render_cmd, (570, 455 + i * 30))
+
+
 while run:
     '''
     main game cycle
@@ -253,9 +273,9 @@ while run:
     numbers_of_the_radar()
     UPPERPART_BRUHBRUH()
     UNDER_TEXTPAD_BRUHBRUHBRUHRBRUH()
-
+    InTerFACE()
     SPAWN()
-
+    GO_WRITE_DA_COMMANDS_OR_NO_GAME()
     DRAW_DA_PLANE_ON_DA_SCREEN()
 
     if gametime >= next_weather_changetime:
