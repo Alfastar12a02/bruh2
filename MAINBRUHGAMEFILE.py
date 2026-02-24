@@ -58,7 +58,7 @@ visibility_display = 20
 next_weather_changetime = gametime
 chat_activity = False
 chat_input = ''
-chat_history = ['brehbrehbrehberehbedbuewabnhdiewfhwuialnwqeuio;wefhsulifnersoiruufhsojfioernfirlnjeo;sfjoi;wsoa/fo;rnfwiosfnoa;nfh']
+chat_history = ['brehbrehbrehberehbedbuewabnhdiewfhwuialnwqeuiowefhsulifnersoiruufhsojfioernfirlnjeo;sfjoi;wsoa/fo;rnfwiosfnoa;nfh', 'nhujadbnwjkdewddyhaweubhdeaukbhckubnhuawekbhukbswkehfuiafhuwabhufybasybheyuabhfayufbsyuabfyuhsbfsyuabhsfhbakugwkebf', 'nhfrwyubgdfhaeyuikxdebuaybgauidhueiwadnheuiergbfhuerihfruihrrhruhfjufhfhfhfhfhfhhfhfhwikdjoaeudeuiweuijdjdjdjdjdjjdjdjdjdjdjdjjdjdjdjdjdjjdjdjdjdj']
 def DRAW_DA_SCREEN():
     '''
     draws the main lines of the screen and decides its color
@@ -270,9 +270,42 @@ def chat_history_before_gta6():
             chat_history_meant_for_display = chat_history
         for count, i in enumerate(chat_history_meant_for_display):
             if len(i) > 70:
-                i = i[0:71] + '\n' + i[71:]
-            lababel =
+                i = i[0:46] + '...'
+            lababel = small_font.render(i, True, GREEN)
             screen.blit(lababel, (560, 60 + count * 30))
+
+
+def AMD_Ryzen_9800X3D_COMMAND_PROCESSOR_CHIP(last_command_for_display, Plane):
+    break_last_cmd_to_pieces = last_command_for_display.lower().split()
+    if not break_last_cmd_to_pieces:
+        return 'Invalid command. Enter one of the commands listed below.'
+    first_part_of_the_broken_last_cmd = break_last_cmd_to_pieces[0]
+    status = ''
+    if first_part_of_the_broken_last_cmd == 'hello':
+        if Plane.on_ground == True:
+            if Plane.fuel >= 100:
+                status = f'Hello, this is {Plane.flight_stats}, fuel:{Plane.fuel}/{Plane.max_fuel}, ready to go.'
+            else:
+                status = f'Hello, this is {Plane.flight_stats}, fuel:{Plane.fuel}/{Plane.max_fuel}, still refueling.'
+        elif Plane.on_ground == False:
+            if Plane.emergency == True:
+                status = f'Hello, this is {Plane.flight_stats}, we have an emergency, requesting immediate landing.'
+            else:
+                status = f'Hello, this is {Plane.flight_stats} reporting.'
+    elif first_part_of_the_broken_last_cmd == 'divert':
+
+    elif first_part_of_the_broken_last_cmd == 'cleared for landing':
+
+    elif first_part_of_the_broken_last_cmd == 'cleared for takeoff':
+
+    elif first_part_of_the_broken_last_cmd == 'abort':
+
+    elif first_part_of_the_broken_last_cmd == 'traffic, go lower':
+
+    elif first_part_of_the_broken_last_cmd == 'traffic, go higher':
+
+    elif first_part_of_the_broken_last_cmd == 'go to flight level fl[input flight level]':
+
 
 while run:
     '''
