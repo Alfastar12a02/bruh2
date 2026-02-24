@@ -56,7 +56,9 @@ visibility_on_screen = 'Visibility: 20km'
 visibility_display = 20
 #time before next weather change will occur
 next_weather_changetime = gametime
-chat_activity = True
+chat_activity = False
+chat_input = ''
+chat_history = ['brehbrehbrehberehbedbuewabnhdiewfhwuialnwqeuio;wefhsulifnersoiruufhsojfioernfirlnjeo;sfjoi;wsoa/fo;rnfwiosfnoa;nfh']
 def DRAW_DA_SCREEN():
     '''
     draws the main lines of the screen and decides its color
@@ -256,7 +258,21 @@ def GO_WRITE_DA_COMMANDS_OR_NO_GAME():
     for i, x in enumerate(POSSIBLE_CMDS_FOR_SCREEN):
         render_cmd = text_tips_VERY_small.render(x, True, GREEN)
         screen.blit(render_cmd, (570, 455 + i * 30))
-
+def chat_history_before_gta6():
+    if not chat_history:
+        label = small_font.render('No communication yet.', True, GREEN)
+        screen.blit(label, (810, 250))
+    else:
+        chat_history_meant_for_display = []
+        if len(chat_history) > 12:
+            chat_history_meant_for_display = chat_history[-12:]
+        else:
+            chat_history_meant_for_display = chat_history
+        for count, i in enumerate(chat_history_meant_for_display):
+            if len(i) > 70:
+                i = i[0:71] + '\n' + i[71:]
+            lababel =
+            screen.blit(lababel, (560, 60 + count * 30))
 
 while run:
     '''
@@ -277,7 +293,7 @@ while run:
     SPAWN()
     GO_WRITE_DA_COMMANDS_OR_NO_GAME()
     DRAW_DA_PLANE_ON_DA_SCREEN()
-
+    chat_history_before_gta6()
     if gametime >= next_weather_changetime:
         WEATHERPART_BRUHBRUHBRUH()
 
