@@ -3,7 +3,7 @@ import time
 
 
 class Plane:
-    def __init__(self, plane_type, flight_stats, fuel, course, speed, altitude, location, max_fuel):
+    def __init__(self, plane_type, flight_stats, fuel, course, speed, altitude, location, max_fuel, behavior):
         self.plane_type = plane_type
         self.able_to_request_refuel = True
         self.able_to_request_landing = True
@@ -18,6 +18,7 @@ class Plane:
         self.on_ground = False
         self.emergency = False
         self.max_fuel = max_fuel
+        self.behavior = behavior
     plane_type_random_list = ['ATR-42', 'ATR-72', 'B737', 'B747', 'A320']
     flight_stats_letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                  'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']

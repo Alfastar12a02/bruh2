@@ -254,7 +254,7 @@ def InTerFACE():
 
 
 def GO_WRITE_DA_COMMANDS_OR_NO_GAME():
-    POSSIBLE_CMDS_FOR_SCREEN = ['1-Hello', '2-Divert', '3-Cleared for landing', '4-Cleared for takeoff', '5-Abort', '6-Traffic, go lower', '7-Traffic, go higher', '8-Go to flight level FL[input flight level]']
+    POSSIBLE_CMDS_FOR_SCREEN = ['1-Hello', '2-Divert', '3-landing', '4-takeoff', '5-Abort', '6-lower', '7-higher', '8-FL [input flight level, 3 numbers, remove the brackets]']
     for i, x in enumerate(POSSIBLE_CMDS_FOR_SCREEN):
         render_cmd = text_tips_VERY_small.render(x, True, GREEN)
         screen.blit(render_cmd, (570, 455 + i * 30))
@@ -293,19 +293,33 @@ def AMD_Ryzen_9800X3D_COMMAND_PROCESSOR_CHIP(last_command_for_display, Plane):
             else:
                 status = f'Hello, this is {Plane.flight_stats} reporting.'
     elif first_part_of_the_broken_last_cmd == 'divert' and Plane.on_ground == False:
-        status = f'Hello, this is {Plane.flight_stats}, diverting to nearest available airport. Goodbye!'
-        time.sleep(10)
-    elif first_part_of_the_broken_last_cmd == 'cleared for landing':
-        status = f'Hello, this is {Plane.flight_stats}, beginning landing procedure.'
-    elif first_part_of_the_broken_last_cmd == 'cleared for takeoff':
 
+        if Plane.behavior == 'circle':
+            Plane.behavior = 'flyby'
+            Plane.angle = random.randint(0, 360)
+            status = f'Hello, this is {Plane.flight_stats}, diverting to nearest available airport. Goodbye!'
+        elif Plane.emergency == True:
+            status = f'unable *unintelligible* help *screaming* goodby-'
+            planes_on_radar_rn.remove(Plane)
+        elif Plane.behavior == 'flyby':
+            status = f'{Plane.flight_stats} diverting to nearest airport. Goodbye!'
+    elif first_part_of_the_broken_last_cmd == 'landing':
+        status = f'Hello, this is {Plane.flight_stats}, beginning landing procedure.'
+        time.sleep(3)
+        Plane.on_ground = True
+        Plane.plane_abilities(Plane)
+    elif first_part_of_the_broken_last_cmd == 'takeoff':
+        PlaneCreateFile.Plane.plane_abilities(Plane)
+        status = f'Hello, this is {Plane.flight_stats}, beginning takeoff procedure.'
+        time.sleep(3)
+        Plane.on_ground = False
     elif first_part_of_the_broken_last_cmd == 'abort':
 
-    elif first_part_of_the_broken_last_cmd == 'traffic, go lower':
+    elif first_part_of_the_broken_last_cmd == 'lower':
 
-    elif first_part_of_the_broken_last_cmd == 'traffic, go higher':
+    elif first_part_of_the_broken_last_cmd == 'higher':
 
-    elif first_part_of_the_broken_last_cmd == 'go to flight level fl[input flight level]':
+    elif first_part_of_the_broken_last_cmd == f'FL':
 
 
 while run:
@@ -328,6 +342,7 @@ while run:
     GO_WRITE_DA_COMMANDS_OR_NO_GAME()
     DRAW_DA_PLANE_ON_DA_SCREEN()
     chat_history_before_gta6()
+    PlaneCreateFile.Plane.fuel_consumption()
     if gametime >= next_weather_changetime:
         WEATHERPART_BRUHBRUHBRUH()
 
