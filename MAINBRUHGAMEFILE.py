@@ -292,10 +292,11 @@ def AMD_Ryzen_9800X3D_COMMAND_PROCESSOR_CHIP(last_command_for_display, Plane):
                 status = f'Hello, this is {Plane.flight_stats}, we have an emergency, requesting immediate landing.'
             else:
                 status = f'Hello, this is {Plane.flight_stats} reporting.'
-    elif first_part_of_the_broken_last_cmd == 'divert':
-
+    elif first_part_of_the_broken_last_cmd == 'divert' and Plane.on_ground == False:
+        status = f'Hello, this is {Plane.flight_stats}, diverting to nearest available airport. Goodbye!'
+        time.sleep(10)
     elif first_part_of_the_broken_last_cmd == 'cleared for landing':
-
+        status = f'Hello, this is {Plane.flight_stats}, beginning landing procedure.'
     elif first_part_of_the_broken_last_cmd == 'cleared for takeoff':
 
     elif first_part_of_the_broken_last_cmd == 'abort':
